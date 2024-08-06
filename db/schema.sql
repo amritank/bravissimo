@@ -1,0 +1,3 @@
+--TODO: Replace with db name
+DROP IF EXISTS {{DB_NAME}};
+CREATE DATABASE {{DB_NAME}};
