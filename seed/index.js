@@ -1,14 +1,18 @@
 const sequelize = require('../config/connection');
-const { Appreciation } = require('../models'); //TODO: Import User model
+const { Appreciation, User} = require('../models'); 
 
-//TODO: Import users seed json file
+
+const userSeedData = require('./user.json');
 const appreciationSeedData = require('./appreciation.json');
 
 const seedDatabase = async () => {
     await sequelize.sync({ force: true });
 
-    // TODO: Create user table and enter seed data
+ 
+    const users = await User.bulkCreate(userSeedData);
+
     const appreciations = await Appreciation.bulkCreate(appreciationSeedData);
+
 
     process.exit(0);
 };
