@@ -1,3 +1,2 @@
---TODO: Replace with db name
-DROP IF EXISTS {{DB_NAME}};
-CREATE DATABASE {{DB_NAME}};
+DROP DATABASE IF EXISTS bravissimo_db;
+CREATE DATABASE  bravissimo_db;
