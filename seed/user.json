@@ -1,0 +1,101 @@
+
+[
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "emailId": "john.doe@example.com",
+      "password": "password123",
+      "profileImg": "https://example.com/profile/john.jpg"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "emailId": "jane.smith@example.com",
+      "password": "password456",
+      "profileImg": "https://example.com/profile/jane.jpg"
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "emailId": "alice.johnson@example.com",
+      "password": "password789",
+      "profileImg": "https://example.com/profile/alice.jpg"
+    },
+    {
+      "firstName": "Bob",
+      "lastName": "Brown",
+      "emailId": "bob.brown@example.com",
+      "password": "password101",
+      "profileImg": "https://example.com/profile/bob.jpg"
+    },
+    {
+      "firstName": "Charlie",
+      "lastName": "Davis",
+      "emailId": "charlie.davis@example.com",
+      "password": "password202",
+      "profileImg": "https://example.com/profile/charlie.jpg"
+    },
+    {
+      "firstName": "David",
+      "lastName": "Evans",
+      "emailId": "david.evans@example.com",
+      "password": "password303",
+      "profileImg": "https://example.com/profile/david.jpg"
+    },
+    {
+      "firstName": "Eve",
+      "lastName": "Franklin",
+      "emailId": "eve.franklin@example.com",
+      "password": "password404",
+      "profileImg": "https://example.com/profile/eve.jpg"
+    },
+    {
+      "firstName": "Grace",
+      "lastName": "Green",
+      "emailId": "grace.green@example.com",
+      "password": "password505",
+      "profileImg": "https://example.com/profile/grace.jpg"
+    },
+    {
+      "firstName": "Hank",
+      "lastName": "Harris",
+      "emailId": "hank.harris@example.com",
+      "password": "password606",
+      "profileImg": "https://example.com/profile/hank.jpg"
+    },
+    {
+      "firstName": "Ivy",
+      "lastName": "Ingram",
+      "emailId": "ivy.ingram@example.com",
+      "password": "password707",
+      "profileImg": "https://example.com/profile/ivy.jpg"
+    },
+    {
+      "firstName": "Jack",
+      "lastName": "Jackson",
+      "emailId": "jack.jackson@example.com",
+      "password": "password808",
+      "profileImg": "https://example.com/profile/jack.jpg"
+    },
+    {
+      "firstName": "Karen",
+      "lastName": "King",
+      "emailId": "karen.king@example.com",
+      "password": "password909",
+      "profileImg": "https://example.com/profile/karen.jpg"
+    },
+    {
+      "firstName": "Liam",
+      "lastName": "Lewis",
+      "emailId": "liam.lewis@example.com",
+      "password": "password1010",
+      "profileImg": "https://example.com/profile/liam.jpg"
+    },
+    {
+      "firstName": "Mia",
+      "lastName": "Martinez",
+      "emailId": "mia.martinez@example.com",
+      "password": "password1111",
+      "profileImg": "https://example.com/profile/mia.jpg"
+    }
+]

@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
-const sequelize = require('../config/');
+const sequelize = require('../config/connection');
 
 class User extends Model {}
 
@@ -13,15 +13,15 @@ User.init(
         primaryKey: true,
         allowNull: false
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false
       },
-      email_id: {
+      emailId: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
@@ -30,7 +30,7 @@ User.init(
         type: DataTypes.STRING,
         allowNull: false
       }, 
-      profile_img: {
+      profileImg: {
         type: DataTypes.STRING,
         allowNull: false
       }
