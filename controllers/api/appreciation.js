@@ -156,5 +156,47 @@ router.delete("/:id", async (req, res) => {
 });
 
 
+// Implemented middle wear to ensure user does not try to update the unallowed fields
+const immutableFields = ['SenderId', "id", "ReceiverId", 'createdAt', 'updatedAt'];
+
+// Middleware to filter out immutable fields
+function filterImmutableFields(req, res, next) {
+    immutableFields.forEach(field => {
+        if (req.body[field] !== undefined) {
+            delete req.body[field];
+        }
+    });
+    next();
+}
+
+// Put call to edit an note
+router.put("/:id", filterImmutableFields, async (req, res) => {
+    //TODO: Check user is logged in
+    // if (!req.session.user.id) {
+    //     return res.status(400).json({ msg: "You must be logged in first!" })
+    // }
+
+    try {
+        let id = req.params.id;
+        console.log(`Updating appreciation note  with id ${id}`);
+        const data = await Appreciation.update(req.body, {
+            where: {
+                id: id
+            }
+        });
+        console.log("Return data post update: " + JSON.stringify(data));
+        if (!data[0]) {
+            return res.status(404).json({ msg: "No appreciation note found with that id to update!" });
+        }
+        res.status(200).json(data);
+
+    } catch (err) {
+        console.log(`Error while updating note. ${err}`)
+        res.status(500).json({ msg: `Error while updating note. Err: ${err}` });
+    };
+
+});
+
+
 module.exports = router;
 
