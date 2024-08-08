@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
 const bcrypt = require('bcrypt');
-const withAuth = require('../../utils/auth'); 
+// const withAuth = require('../../utils/auth'); 
 
 
-// If a POST request is made to /api/users, a new user is created.
-// The user id and logged in state is saved to the session within the request object.
 router.post('/', async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 5);
@@ -30,27 +28,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/profile', withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: User }],
-    });
-
-    const user = userData.get({ plain: true });
-
-    res.render('profile', {
-      ...user,
-      logged_in: true
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// If a POST request is made to /api/users/login, the function checks to see if the user information matches the information in the database and logs the user in.
-// If correct, the user ID and logged-in state are saved to the session within the request object.
 router.post('/login', async (req, res) => {
   try {
     const { emailId, password } = req.body;

@@ -6,6 +6,7 @@ const withAuth = require('../utils/auth');
 router.get('/', (req, res) => {
   res.render('home', {
     logged_in: req.session.loggedIn,
+    userId:req.session.user?.id,
   });
 });
 
@@ -20,10 +21,10 @@ router.get('/login', (req, res) => {
 
 // Render the registration page
 router.get('/register', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
+  // // if (req.session.loggedIn) {
+  //   res.redirect('/');
+  //   return;
+  // }
   res.render('register');
 });
 
