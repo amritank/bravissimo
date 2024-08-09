@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.querySelector('#login-form');
+    const loginForm = document.querySelector('#loginForm');
   
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.querySelector('#password').value.trim();
   
       try {
-        const response = await fetch('/api/users/login', {
+        const response = await fetch('/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

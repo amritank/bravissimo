@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const profileImg = document.querySelector('#profile_img').value;
   
       try {
-        const response = await fetch('/api/users/register', {
+        const response = await fetch('/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json' 

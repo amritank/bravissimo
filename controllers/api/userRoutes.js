@@ -5,9 +5,8 @@ const bcrypt = require('bcrypt');
 // const withAuth = require('../../utils/auth'); 
 
 
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 5);
     const userData = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -44,17 +43,20 @@ router.post('/login', async (req, res) => {
       return;
     }
 
+    
+    
     const validPassword = await bcrypt.compare(password, userData.password);
 
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect email or password, please try again' });
       return;
     }
-
+    console.log(userData)
     req.session.save(() => {
-      req.session.user_id = userData.id;
       req.session.logged_in = true;
-
+      req.session.user_id = userData.id;
+      console.log(userData)
+    
       res.json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
@@ -85,7 +87,7 @@ router.get('/:id',  async (req, res) => {
 
     const user = userData.get({ plain: true });
 
-    // res.render('/profile', { user, logged_in: req.session.logged_in });
+    res.render('profile', { user, logged_in: req.session.logged_in });
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const withAuth = require('../utils/auth');
+const { User, Appreciation } = require("../models")
 
   // / Render the homepage
 router.get('/', (req, res) => {
@@ -21,10 +22,10 @@ router.get('/login', (req, res) => {
 
 // Render the registration page
 router.get('/register', (req, res) => {
-  // // if (req.session.loggedIn) {
-  //   res.redirect('/');
-  //   return;
-  // }
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
   res.render('register');
 });
 
