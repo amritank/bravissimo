@@ -1,0 +1,15 @@
+<h1>Register</h1>
+  <form id="register-form" method="POST" action="/api/users/register">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" required>
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" required>
+    <label for="email_id">Email</label>
+    <input type="email" id="email_id" name="email_id" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    <label for="profile_img">Profile Image URL</label>
+    <input type="url" id="profile_img" name="profile_img" required>
+    <button type="submit">Register</button>
+  </form>
+  <script src="../public/js/register.js"></script>

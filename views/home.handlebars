@@ -1,0 +1,23 @@
+
+  <h1>Welcome to Your App</h1>
+  <p>Your place for sending and receiving appreciation notes.</p>
+
+  {{#if user}}
+    <div id="user-data" data-username="{{user.first_name}}">
+      <p>Welcome, {{user.first_name}}!</p>
+      <p>Explore our features:</p>
+      <ul>
+        <li><a href="/profile">View Your Profile</a></li>
+        <li>
+          <form id="logout-form" action="/logout" method="POST" style="display:inline;">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  {{else}}
+    <p>Please <a href="/login" id="login-link">login</a> or <a href="/register" id="register-link">register</a> to get started.</p>
+  {{/if}}
+
+  <script src="../public/home.js"></script>
+
