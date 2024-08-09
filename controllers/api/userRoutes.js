@@ -65,8 +65,20 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.delete('/logout', (req, res) => {
+  console.log("here in api/user/logout");
+  console.log('session', req.session);
+  if (req.session.logged_in) {
+    console.log('Session exists, attempting to destroy'); 
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  } 
+  console.log('session', req.session);
+});
 
-// GET /users/:id - Get user by ID
 router.get('/:id',  async (req, res) => {
   console.log('GET /:id route hit');
   try {
@@ -93,16 +105,7 @@ router.get('/:id',  async (req, res) => {
   }
 });
 
-// If a POST request is made to /api/users/logout, the function checks the logged_in state in the request.session object and destroys that session if logged_in is true.
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
-    res.status(404).end();
-  }
-});
+
 
 
 module.exports = router;

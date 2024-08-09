@@ -1,3 +1,20 @@
+// Initialize Cloudinary Upload Widget
+const uploadWidget = cloudinary.createUploadWidget({
+  cloudName: 'du8evfoox', 
+  uploadPreset: 'blank-profile-picture' 
+}, (error, result) => {
+  if (!error && result && result.event === "success") {
+    console.log('Done! Here is the image info: ', result.info);
+    document.querySelector('#profile_img').value = result.info.secure_url;
+  }
+});
+
+document.getElementById('upload_widget').addEventListener('click', function() {
+  uploadWidget.open();
+}, false);
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.querySelector('#register-form');
   
