@@ -3,3 +3,45 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --Rubik: "Rubik", sans-serif;
+    --bg: rgb(204, 228, 247);
+}
+
+body {
+    background-image: url("/images/hands.png");
+    background-size: cover;
+    background-color: var(--bg);
+    font-family: var(--Rubik);
+}
+
+#mainContainer {
+    background-color: white;
+    border-radius: 50px;
+    min-height: 90vh
+}
+
+#profileImg {
+    border-radius: 50%;
+    width: 12vw;
+    height: 12vw;
+    border: 1px solid black;
+}
+
+a {
+    text-decoration: none;
+}
+
+#dataContainer {
+    font-family: var(--Rubik);
+    border-radius: 5px;
+}
+
+.fa-heart {
+    color: red;
+}
+
+.fa-rocket {
+    color: orange;
+}

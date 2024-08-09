@@ -16,7 +16,6 @@ app.engine('handlebars', hbs.engine);
 // configure the default view engine to hb
 app.set('view engine', 'handlebars');
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));

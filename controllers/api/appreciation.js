@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Appreciation } = require("../../models");
+const { Appreciation, User } = require("../../models");
 
 // route to Get all appreciation notes
 router.get("/", async (req, res) => {
@@ -80,6 +80,7 @@ router.get("/received/user/:id", async (req, res) => {
     try {
         console.log(`Querying appreciation notes received by user with id ${user_id}`);
         const data = await Appreciation.findAll({
+            include: [{ model: User, as: "Sender" }],
             where: {
                 ReceiverId: user_id
             }
@@ -112,6 +113,7 @@ router.get("/sent/user/:id", async (req, res) => {
     try {
         console.log(`Querying appreciation notes sent by user with id ${user_id}`);
         const data = await Appreciation.findAll({
+            include: [{ model: User, as: "Receiver" }],
             where: {
                 SenderId: user_id
             }
@@ -130,6 +132,7 @@ router.get("/sent/user/:id", async (req, res) => {
 
 // route to delete appreciation notes received by an user
 router.delete("/:id", async (req, res) => {
+    //TODO: We will ove this to using middle wear as implemented by Annamaris
     //TODO: Check user is logged in
     // if (!req.session.user.id) {
     //     return res.status(400).json({ msg: "You must be logged in first!" })
@@ -155,7 +158,7 @@ router.delete("/:id", async (req, res) => {
     };
 });
 
-
+// TODO: We will move it to utils as done by Annamaris
 // Implemented middle wear to ensure user does not try to update the unallowed fields
 const immutableFields = ['SenderId', "id", "ReceiverId", 'createdAt', 'updatedAt'];
 
