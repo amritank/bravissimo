@@ -17,13 +17,13 @@ router.get('/login', (req, res) => {
     res.redirect('/');
     return;
   }
-  res.render('login');
+  res.render('home');
 });
 
 // Render the registration page
 router.get('/register', (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/profile');
     return;
   }
   res.render('register');
