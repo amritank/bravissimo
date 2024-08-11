@@ -6,6 +6,7 @@ const apiRoutes = require('./api');
 // you can ignore this logic as i did it just for testing. you can follow what you have. 
 // TODO: REMOVE
 router.use('/profile', (req, res) => res.sendFile("/Users/amritanair/git/bravissimo/public/pages/profile.html"));
+router.use('/img_upload', (req, res) => res.sendFile("/Users/amritanair/git/bravissimo/public/pages/cloudinary.html"));
 
 // TODO: END REMOVE
 // router.use('/profile', (req, res) => res.send({msg: "here"}));
