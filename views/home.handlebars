@@ -1,0 +1,36 @@
+
+  <h1>Welcome to Your App</h1>
+  <p>Your place for sending and receiving appreciation notes.</p>
+
+  <h1>Login</h1>
+  <form id="loginForm" method="POST" action="/api/user/login">
+     <label for="emailId">Email</label>
+    <input type="email" id="emailId" name="emailId" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <p>Don't have an account? <a href="/register">Register here</a>.</p>
+
+  <script src="/js/home.js"></script>
+
+  {{!-- {{#if user}}
+    <div id="user-data" data-username="{{user.first_name}}">
+      <p>Welcome, {{user.first_name}}!</p>
+      <p>Explore our features:</p>
+      <ul>
+        <li><a href="/profile">View Your Profile</a></li>
+        <li>
+          <form id="logout-form" action="/logout" method="POST" style="display:inline;">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  {{else}}
+    <p>Please <a href="/login" id="login-link">login</a> or <a href="/register" id="register-link">register</a> to get started.</p>
+  {{/if}}
+
+  <script src="/public/js/home.js"></script> --}}
+
