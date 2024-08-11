@@ -55,16 +55,6 @@
             <div class="col-sm-12 col-md-9">
                 <div id="alertMsgContainer"></div>
                 <div class="mb-2 " id="dataContainer">
-                    {{#each notes as |note|}}
-                    <div class="card mb-4" style="box-shadow: 10px 5px 5px lightgray">
-                        <div class="card-body">
-                            {{note.message}}
-                            <p class="text-black-50 text-end">
-                                <small>{{note.user}}</small>
-                            </p>
-                        </div>
-                    </div>
-                    {{/each}}
                 </div>
                 <div id="sendThanksContainer">
                     <form id="sendThanksForm">

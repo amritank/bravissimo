@@ -11,6 +11,9 @@ const sendThanksContainerEl = document.getElementById('sendThanksContainer');
 const templaeEls = document.querySelectorAll('div[id^="img"]');
 const msgEl = document.getElementById("thankyounote");
 const receiverUserEl = document.getElementById("receiver");
+const reset = document.getElementById("reset");
+const logout = document.getElementById("logout");
+
 let recvdNotesCnt = 0;
 let sentNotesCnt = 0;
 let selectedTemplateLink;
@@ -22,15 +25,16 @@ function clearAlertMsgContainer() {
     alertMsgEl.classList.remove("alert-primary");
     alertMsgEl.classList.remove("alert-danger");
     alertMsgEl.classList.remove("alert");
+    alertMsgEl.classList.remove("mb-5");
 }
 
 function displayMsgInAlertContainer(msg, msgType) {
     alertMsgEl.display = "block";
     alertMsgEl.textContent = msg;
     if (msgType === "info") {
-        alertMsgEl.classList.add("alert", "alert-primary");
+        alertMsgEl.classList.add("alert", "alert-primary", "mb-1");
     } else {
-        alertMsgEl.classList.add("alert", "alert-danger");
+        alertMsgEl.classList.add("alert", "alert-danger", "mb-1");
     }
 }
 
@@ -39,6 +43,7 @@ function clearFields() {
     msgEl.style = "";
     receiverUserEl.value = "";
 }
+
 
 // ----- Functions to render html  ----
 function renderUserDetails(userData) {
@@ -53,23 +58,19 @@ function renderUserDetails(userData) {
     const profileImgEl = document.getElementById("profileImg");
     profileImgEl.style.backgroundImage = "url(" + userData.profileImg + ")";
     profileImgEl.style.backgroundSize = "cover";
+
 }
 
 // Render receiver notes to ui
 function renderReceiveNotesHTML(data) {
     console.log("rendering received notes:");
-    for (entry of data) {
-        const divContainerEl = document.createElement("div");
-        divContainerEl.style.width = "80%";
-        divContainerEl.style.boxShadow = "10px 5px 5px lightgray";
-        divContainerEl.classList.add("card", "mb-4");
-        const divContentContainerEl = document.createElement("div");
-        divContentContainerEl.classList.add("card-body");
-        divContentContainerEl.innerHTML = entry.message;
-        const pEl = document.createElement("p");
-        pEl.style.textAlign = "right";
-        pEl.classList.add("text-black-50");
-        pEl.innerHTML = "<small>By " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
+    // for (entry of data) {
+    const notes = []
+    for (let i = 0; i < data.length; i++) {
+        let entry = data[i];
+        const newNote = {}
+        newNote.message = entry.message;
+        const userInfo = "By " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
             (new Date(entry.createdAt))
                 .toLocaleString([], {
                     year: 'numeric',
@@ -78,12 +79,33 @@ function renderReceiveNotesHTML(data) {
                     hour: 'numeric',
                     minute: '2-digit',
                     timeZoneName: 'short'
-                })
-            + "</small";
-        divContentContainerEl.append(pEl);
-        divContainerEl.append(divContentContainerEl);
-        dataContainerEl.appendChild(divContainerEl);
-        //TODO: Need to add section displaying sender (By xyz) and date (on date)
+                });
+        console.log("[AMU] info", userInfo);
+        notes.push(newNote);
+
+        // const divContainerEl = document.createElement("div");
+        // divContainerEl.style.boxShadow = "10px 5px 5px lightgray";
+        // divContainerEl.classList.add("card", "mb-4");
+        // const divContentContainerEl = document.createElement("div");
+        // divContentContainerEl.classList.add("card-body", "h-25");
+        // divContentContainerEl.innerHTML = entry.message;
+        // const pEl = document.createElement("p");
+        // pEl.style.textAlign = "right";
+        // pEl.classList.add("text-black-50");
+        // pEl.innerHTML = "<small>By " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
+        //     (new Date(entry.createdAt))
+        //         .toLocaleString([], {
+        //             year: 'numeric',
+        //             month: 'short',
+        //             day: 'numeric',
+        //             hour: 'numeric',
+        //             minute: '2-digit',
+        //             timeZoneName: 'short'
+        //         })
+        //     + "</small";
+        // divContentContainerEl.append(pEl);
+        // divContainerEl.append(divContentContainerEl);
+        // dataContainerEl.appendChild(divContainerEl);
     }
 }
 
@@ -91,7 +113,6 @@ function renderReceiveNotesHTML(data) {
 function renderSentNotesHTML(data) {
     for (entry of data) {
         const divContainerEl = document.createElement("div");
-        divContainerEl.style.width = "80%";
         divContainerEl.style.boxShadow = "10px 5px 5px lightgray";
         divContainerEl.classList.add("card", "mb-4");
         const divContentContainerEl = document.createElement("div");
@@ -168,7 +189,6 @@ async function getThanksSentByUser(loggedUserId) {
     };
 }
 
-
 // GET /sessiondata
 async function getSessionData() {
     try {
@@ -181,7 +201,6 @@ async function getSessionData() {
         console.log("error: ", err)
     };
 }
-
 
 // ----- Event  listeners and callbacks----
 function handleCardTemplateClickEvent(event) {
@@ -198,6 +217,7 @@ async function thanksFormSubmitEventHandler(event) {
     // get receiver user id
     const rUser = receiverUserEl.value;
     const msg = msgEl.value;
+    console.log("in form: ", rUser);
 
     // Validate inputs 
     if (rUser === "" || msg === "") {
@@ -221,7 +241,7 @@ async function thanksFormSubmitEventHandler(event) {
                 },
                 body: JSON.stringify({
                     sender_id: loggedUserId,
-                    receiver_id: 16, //TODO: remvoe
+                    receiver_name: rUser,
                     message: noteData
                 })
             });
@@ -231,7 +251,7 @@ async function thanksFormSubmitEventHandler(event) {
                 clearFields();
             } else {
                 const data = await response.json()
-                displayMsgInAlertContainer("Failed to send note to user. Error: " + data, "info");
+                displayMsgInAlertContainer("Failed to send note to user. Error: " + data, "danger");
                 clearFields();
             }
 
@@ -268,61 +288,36 @@ async function initWindowFunction() {
     console.log("logged In user id: ", loggedUserId);
 
     // Initialize autoComplete
-    // new autoComplete({
-    //     selector: '#receiver',
-    //     placeHolder: 'Type to search...',
-    //     data: {
-    //         src: async function (query) {
-    //             try {
-    //                 const response = await fetch(`api/user/`);
-    //                 const data = await response.json();
-    //                 console.log("AC: ", data);
-    //                 return data; // Return the fetched data
-    //             } catch (error) {
-    //                 console.error('Error fetching data:', error);
-    //                 return []; // Return an empty array in case of error
-    //             }
-    //         },
-    //        // key: ["firstName"], // Key to access the name in the returned data
-    //         cache: false
-    //     },
-    //     resultsList: {
-    //         // render: true,
-    //         // container: (source) => {
-    //         //     source.setAttribute("id", "autocomplete-results");
-    //         // },
-    //         // destination: document.querySelector("#receiver"),
-    //         // position: "afterend"
-    //         element: (list, data) => {
-    //             console.log("results list: ", data)
-    //             if (!data.results.length) {
-    //                 // Create "No Results" message element
-    //                 const message = document.createElement("div");
-    //                 // Add class to the created element
-    //                 message.setAttribute("class", "no_result");
-    //                 // Add message text content
-    //                 message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
-    //                 // Append message element to the results list
-    //                 list.prepend(message);
-    //             }
-    //         },
-    //         noResults: true,
-    //     },
-    //     resultItem: {
-    //         highlight: true,
-    //         content: (data) => {
-    //             const res = `<div class="autocomplete-suggestion">${data.value.firstName}</div>`;
-    //             console.log("result: ", res);
-    //             return (res);
-    //         }
-    //     },
-    //     onSelection: (feedback) => {
-    //         console.log("feedback: ", feedback);
-    //         const selection = feedback.selection.value;
-    //         console.log('Selected:', selection);
-    //         document.querySelector('#receiver').value = selection.name; // Set the input value to the selected item
-    //     }
-    // });
+    const autoCompleteJS = new autoComplete({
+        selector: '#receiver',
+        placeHolder: 'Type to search...',
+        data: {
+            src: async function (query) {
+                try {
+                    const response = await fetch(`api / user / `);
+                    const data = await response.json();
+
+                    return data; // Return the fetched data
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    return []; // Return an empty array in case of error
+                }
+            },
+            cache: false
+        },
+        resultItem: {
+            highlight: true,
+        },
+        events: {
+            input: {
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    console.log("selection: ", selection);
+                    autoCompleteJS.input.value = selection;
+                }
+            }
+        }
+    });
 
     Promise.all([getUserData(loggedUserId), getThanksRecvdByUser(loggedUserId), getThanksSentByUser(loggedUserId)])
         .then(([userdataResponse, receivedResponse, sentResponse]) => {
@@ -348,7 +343,7 @@ async function initWindowFunction() {
             }
 
             // Log the total counts after both API calls have completed
-            console.log(`Total sent notes: ${sentNotesCnt} and received notes: ${recvdNotesCnt}`);
+            console.log(`Total sent notes: ${sentNotesCnt} and received notes: ${recvdNotesCnt} `);
             // Udpate total recvd and sent thanks count to html
             updateRecvdAndSentThanksCount(recvdNotesCnt, sentNotesCnt);
 
@@ -415,6 +410,25 @@ receiverUserEl.addEventListener("click", () => {
     clearAlertMsgContainer();
 })
 
+reset.addEventListener("click", () => {
+    clearFields();
+    clearAlertMsgContainer();
+});
 
+logout.addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/user/logout', {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            console.log('sucessfully logged out')
+            window.location.href = '/';
+        } else {
+            console.log("Error while trying to logged out: ", response);
+        }
+    } catch (err) {
+        console.log("Error while trying to log out: ", err);
+    }
+});
 
 window.onload = initWindowFunction;

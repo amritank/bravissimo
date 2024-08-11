@@ -7,6 +7,7 @@
 :root {
     --Rubik: "Rubik", sans-serif;
     --bg: rgb(204, 228, 247);
+    --cbg: rgb(249, 249, 249);
 }
 
 body {
@@ -16,19 +17,28 @@ body {
     font-family: var(--Rubik);
 }
 
+header {
+    background-color: var(--bg);
+    padding: 0;
+}
+
+.navbar {
+    background-color: var(--bg);
+    padding: 0;
+}
+
 #mainContainer {
-    background-color: white;
+    background-color: var(--cbg);
     border-radius: 50px;
     min-height: 90vh;
-    /* font-family: var(--Rubik); */
+}
+
+.custom-gutter {
+    --bs-gutter-x: 2rem;
 }
 
 #profileImg {
-    /* TODO: Revisit this. Ugle on large screens */
     border-radius: 50%;
-    /* width: 12vw;
-    height: 12vw; */
-    width: 60%;
     aspect-ratio: 1 / 1;
     border: 1px solid black;
 }
@@ -50,23 +60,8 @@ a {
     color: orange;
 }
 
-.form-control {
-    color: black;
-}
-
 #sendThanksContainer {
     display: none;
-}
-
-#thankyounote {
-    color: black;
-    /* font-weight: bold; */
-    width: 80%;
-    /* background-position: center;
-    background-image:
-        linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
-        url('/images/thankyou_template_3.jpeg');
-    background-size: cover; */
 }
 
 div[id^="img"] {
@@ -74,6 +69,26 @@ div[id^="img"] {
     background-position: center;
     width: 60px;
     height: 60px;
+    border: 1px solid black;
+}
+
+.letters {
+    background-color: white;
+    margin-right: 5px;
+    display: inline-block;
+    font-size: 3.5vmin;
+}
+
+.letters:nth-child(odd) {
+    transform: rotate(10deg);
+}
+
+.letters:nth-child(even) {
+    transform: rotate(-5deg);
+}
+
+#img0 {
+    background-image: linear-gradient(white, white);
 }
 
 #img1 {
@@ -88,7 +103,43 @@ div[id^="img"] {
     background-image: url('/images/thankyou_template_3.jpeg');
 }
 
-/* 
-#alertMsgContainer {
-    display: none;
-} */
+#img4 {
+    background-image: url('/images/thankyou_template_4.jpg');
+}
+
+#img5 {
+    background-image: url('/images/thankyou_template_5.jpg');
+}
+
+#img6 {
+    background-image: url('/images/thankyou_template_6.jpg');
+}
+
+#receiver {
+    font-family: var(--Rubik) !important;
+}
+
+#autoComplete_wrapper {
+    position: relative;
+}
+
+#autoComplete_list_1 {
+    list-style-type: none;
+    border: 0.5px solid lightgray;
+    border-radius: .25rem;
+    min-width: 500px;
+    font-family: var(--Rubik) !important;
+    padding: 0;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    color: red;
+}
+
+li[id^="autoComplete_result"] {
+    border-bottom: 0.5px solid lightgray;
+    font-family: var(--Rubik) !important;
+    padding: 0;
+
+}

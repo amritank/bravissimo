@@ -31,7 +31,8 @@ router.get('/register', (req, res) => {
 
 // Render the user profile page, protected by withAuth middleware
 router.get('/profile', withAuth, (req, res) => {
-  res.render('profile', {
+  // TODO: REVERT AND REMOVE 1
+  res.render('profile1', {
     sessionuser: req.session.user,
     logged_in: req.session.loggedIn,
   });

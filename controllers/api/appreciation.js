@@ -2,25 +2,6 @@ const router = require("express").Router();
 const { Appreciation, User } = require("../../models");
 const { withAuth, filterImmutableFields } = require('../../utils/util.js');
 
-// // route to Get all appreciation notes
-// router.get("/", async (req, res) => {
-//     //TODO: Check user is logged in
-//     if (!req.session.logged_in) {
-//         return res.status(400).json({ msg: "You must be logged in first!" })
-//     }
-
-//     try {
-//         console.log(`Querying for an appreciation note with id: ${req.params.id}`);
-//         const data = await Appreciation.findAll();
-//         console.log("Recieved appreciation note as: " + JSON.stringify(data));
-//         res.status(200).json(data);
-
-//     } catch (err) {
-//         console.log(`Error while requesting an apreciation note. ${err}`)
-//         res.status(500).json({ msg: `Error while requesting an appreciation note. Err: ${err}` });
-//     };
-// });
-
 // router to post a new thank you route
 router.post("/", async (req, res) => {
     //TODO: REVERT
@@ -29,15 +10,20 @@ router.post("/", async (req, res) => {
     // }
 
     try {
+        const receiver_name = req.body.receiver_name.split(" ");
+        const userData = await User.findOne({
+            where: {
+                firstName: receiver_name[0],
+                lastName: receiver_name[1]
+            }
+        });
+        console.log("model user data : ", userData);
         const data = await Appreciation.create({
-            //TODO: REVERT
-            // SenderId: req.session.user.id,
-            // ReceiverId: req.body.receiver_id,
-            // message: req.body.message
             SenderId: req.body.sender_id,
-            ReceiverId: req.body.receiver_id,
+            ReceiverId: userData.id,
             message: req.body.message
         });
+
         console.log("Recieved data from the post appreciation call as: " + JSON.stringify(data));
         res.status(200).json(data);
 

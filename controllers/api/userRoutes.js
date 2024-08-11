@@ -65,6 +65,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// GET /users and return only first name and last name for auto complete
 router.get('/', async (req, res) => {
   console.log('GET all users route hit');
 
@@ -75,14 +76,14 @@ router.get('/', async (req, res) => {
   try {
     console.log(`Fetching all users`)
     const userData = await User.findAll({
-      attributes: ['firstName']
+      attributes: ['firstName', 'lastName']
     });
 
     if (!userData) {
       res.status(404).json({ message: "No users found" });
       return;
     }
-    const firstNames = userData.map((ele) => ele.firstName);
+    const firstNames = userData.map((ele) => ele.firstName + " " + ele.lastName);
     res.json(firstNames);
   } catch (err) {
     res.status(500).json(err);
@@ -124,9 +125,21 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// If a POST request is made to /api/users/logout, the function checks the logged_in state in the request.session object and destroys that session if logged_in is true.
-router.post('/logout', (req, res) => {
+// // If a POST request is made to /api/users/logout, the function checks the logged_in state in the request.session object and destroys that session if logged_in is true.
+// router.post('/logout', (req, res) => {
+//   if (req.session.logged_in) {
+//     req.session.destroy(() => {
+//       res.status(204).end();
+//     });
+//   } else {
+//     res.status(404).end();
+//   }
+// });
+
+router.delete('/logout', (req, res) => {
+  console.log('Session', req.session);
   if (req.session.logged_in) {
+    console.log('Session exists, attempting to destroy');
     req.session.destroy(() => {
       res.status(204).end();
     });
@@ -134,6 +147,5 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
-
 
 module.exports = router;
