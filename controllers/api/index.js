@@ -7,5 +7,6 @@ router.use("/appreciation", appreciationRoutes);
 
 const userRoutes = require("./userRoutes.js");
 router.use("/user", userRoutes)
+router.use("/users", userRoutes)
 
 module.exports = router;

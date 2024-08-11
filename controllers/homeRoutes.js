@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const withAuth = require('../utils/auth');
+const { withAuth } = require('../utils/util');
 const { User, Appreciation } = require("../models")
 
-  // / Render the homepage
+// / Render the homepage
 router.get('/', (req, res) => {
   res.render('home', {
     logged_in: req.session.loggedIn,
-    userId:req.session.user?.id,
+    userId: req.session.user?.id,
   });
 });
 
@@ -32,11 +32,9 @@ router.get('/register', (req, res) => {
 // Render the user profile page, protected by withAuth middleware
 router.get('/profile', withAuth, (req, res) => {
   res.render('profile', {
-    user: req.session.user,
+    sessionuser: req.session.user,
     logged_in: req.session.loggedIn,
   });
 });
 
-  
-  module.exports = router;
- 
+module.exports = router;

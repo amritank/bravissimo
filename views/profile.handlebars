@@ -1,11 +1,87 @@
-<div class="card">
-    <form id="userprofileform"></form>
-    {{!-- <img src="img.jpg" alt="John" style="width:100%"> --}}
-    <h1>John Doe</h1>
-    <p class="title">CEO & Founder, Example</p>
-    <p>Harvard University</p>
-    <button type="button" class="btn btn-success btn-sm w-sm waves-effect m-t-10 waves-light">Recieved</button>
-    <button type="button" class="btn btn-danger btn-sm w-sm waves-effect m-t-10 waves-light">Sent</button>
-    <button type="button" class="btn btn-danger btn-sm w-sm waves-effect m-t-10 waves-light">Send Thanks</button>
-</div>
+<link rel='stylesheet' type='text/css' href='/css/profile.css' />
+<header>
+    <!-- TODO: Logout and username -->
+</header>
+<main>
+    <div id="mainContainer" class="container mt-5">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 p-md-4 p-sm-2 d-flex justify-content-center align-items-center">
+                <div class="p-2" id="profileImg">
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-12 p-md-4 p-sm-2">
+                <div id="welcome">
+                    <h3><span id="user"></span></h3>
+                    <span id="recvdNotes"></span>
+                    <i data-toggle="tooltip" data-placement="bottom" title="Received" class="fa-solid fa-heart">
+                    </i>
+                    <span id="sentNotes"></span> <span data-toggle="tooltip" data-placement="top" title="Sent">🎁</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-3 p-sm-2 ">
+                <div class="row px-sm-2 px-md-5 mb-4">
+                    <div class="col "><a href="#" id="recvdNotesLink">Received</a></div>
+                </div>
+                <div class="row px-md-5 px-sm-2 mb-4">
+                    <div class=" col"><a href="#" id="sentNotesLink">Sent</a></div>
+                </div>
+                <div class="row px-md-5 px-sm-2 mb-4">
+                    <div class="col"><a href="#" id="sendThanksLink">Send Thanks</a></div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-9">
+                <div id="alertMsgContainer"></div>
+                <div id="dataContainer">
+                </div>
+                <div id="sendThanksContainer">
+                    <form id="sendThanksForm">
+                        <div class="row">
+                            <div class="col-5 text-dark">
+                                <label for="receiver">User</label>
+                                <input type="text" class="form-control" id="receiver" placeholder="Enter user..">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col ">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="template">Choose a template</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col; d-flex flex-row">
+                                        <div id="img1" class="me-2" data-img="/images/thankyou_template_1.jpg"></div>
+                                        <div id="img2" class="me-2" data-img="/images/thankyou_template_2.jpeg"></div>
+                                        <div id="img3" data-img="/images/thankyou_template_3.jpeg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col text-dark">
+                                <label for="thankyounote">Message</label>
+                                <textarea class="form-control text-dark" id="thankyounote" rows="10"
+                                    placeholder="Enter your message.."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 ">
+                            <div class="col ">
+                                <button type="submit" class="btn btn-primary mb-3">Send Thanks</button>
+                                {{!-- <button type="submit" class="btn btn-primary mb-3">Preview Note</button> --}}
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+<footer>
+    <!-- TODO: copyright and bravissimo title  -->
+</footer>
 <script src="/js/profile.js"></script>

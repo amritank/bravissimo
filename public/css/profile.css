@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --Rubik: "Rubik", sans-serif;
+    --bg: rgb(204, 228, 247);
+}
+
+body {
+    background-image: url("/images/hands.png");
+    background-size: cover;
+    background-color: var(--bg);
+    font-family: var(--Rubik);
+}
+
+#mainContainer {
+    background-color: white;
+    border-radius: 50px;
+    min-height: 90vh;
+    /* font-family: var(--Rubik); */
+}
+
+#profileImg {
+    /* TODO: Revisit this. Ugle on large screens */
+    border-radius: 50%;
+    /* width: 12vw;
+    height: 12vw; */
+    width: 60%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid black;
+}
+
+a {
+    text-decoration: none;
+}
+
+#dataContainer {
+    font-family: var(--Rubik);
+    border-radius: 5px;
+}
+
+.fa-heart {
+    color: red;
+}
+
+.fa-rocket {
+    color: orange;
+}
+
+.form-control {
+    color: black;
+}
+
+#sendThanksContainer {
+    display: none;
+}
+
+#thankyounote {
+    color: black;
+    /* font-weight: bold; */
+    width: 80%;
+    /* background-position: center;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+        url('/images/thankyou_template_3.jpeg');
+    background-size: cover; */
+}
+
+div[id^="img"] {
+    background-size: cover;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+}
+
+#img1 {
+    background-image: url('/images/thankyou_template_1.jpg');
+}
+
+#img2 {
+    background-image: url('/images/thankyou_template_2.jpeg');
+}
+
+#img3 {
+    background-image: url('/images/thankyou_template_3.jpeg');
+}
+
+/* 
+#alertMsgContainer {
+    display: none;
+} */

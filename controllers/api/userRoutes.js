@@ -43,8 +43,8 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    
-    
+
+
     const validPassword = await bcrypt.compare(password, userData.password);
 
     if (!validPassword) {
@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
       req.session.logged_in = true;
       req.session.user_id = userData.id;
       console.log(userData)
-    
+
       res.json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
@@ -65,16 +65,46 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  console.log('GET all users route hit');
 
-// GET /users/:id - Get user by ID
-router.get('/:id',  async (req, res) => {
-  console.log('GET /:id route hit');
+  if (!req.session.user_id) {
+    return res.status(400).json({ msg: "You must be logged in first!" })
+  }
+
   try {
-    console.log(`Fetching user with ID: ${req.params.id}`)
-    const userData = await User.findByPk(req.params.id, {
+    console.log(`Fetching all users`)
+    const userData = await User.findAll({
+      attributes: ['firstName']
+    });
+
+    if (!userData) {
+      res.status(404).json({ message: "No users found" });
+      return;
+    }
+    const firstNames = userData.map((ele) => ele.firstName);
+    res.json(firstNames);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET /user - Get user by ID
+router.get('/:id', async (req, res) => {
+  console.log('GET /:id route hit');
+
+  if (!req.session.user_id) {
+    return res.status(400).json({ msg: "You must be logged in first!" })
+  }
+
+  let user_id = req.params.id;
+
+  try {
+    console.log(`Fetching user with ID: ${user_id}`)
+    const userData = await User.findByPk(user_id, {
       attributes: [
-        ['firstName', 'firstName'], 
-        ['lastName', 'lastName'], 
+        ['firstName', 'firstName'],
+        ['lastName', 'lastName'],
         'emailId',
         'profileImg',
       ],
@@ -85,9 +115,10 @@ router.get('/:id',  async (req, res) => {
       return;
     }
 
-    const user = userData.get({ plain: true });
+    // const user = userData.get({ plain: true });
 
-    res.render('profile', { user, logged_in: req.session.logged_in });
+    // res.render('profile', { user, logged_in: req.session.logged_in });
+    res.json(userData);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,34 +1,39 @@
 const router = require("express").Router();
-const { Appreciation } = require("../../models");
+const { Appreciation, User } = require("../../models");
+const { withAuth, filterImmutableFields } = require('../../utils/util.js');
 
-// route to Get all appreciation notes
-router.get("/", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
+// // route to Get all appreciation notes
+// router.get("/", async (req, res) => {
+//     //TODO: Check user is logged in
+//     if (!req.session.logged_in) {
+//         return res.status(400).json({ msg: "You must be logged in first!" })
+//     }
 
-    try {
-        console.log(`Querying for an appreciation note with id: ${req.params.id}`);
-        const data = await Appreciation.findAll();
-        console.log("Recieved appreciation note as: " + JSON.stringify(data));
-        res.status(200).json(data);
+//     try {
+//         console.log(`Querying for an appreciation note with id: ${req.params.id}`);
+//         const data = await Appreciation.findAll();
+//         console.log("Recieved appreciation note as: " + JSON.stringify(data));
+//         res.status(200).json(data);
 
-    } catch (err) {
-        console.log(`Error while requesting an apreciation note. ${err}`)
-        res.status(500).json({ msg: `Error while requesting an appreciation note. Err: ${err}` });
-    };
-});
+//     } catch (err) {
+//         console.log(`Error while requesting an apreciation note. ${err}`)
+//         res.status(500).json({ msg: `Error while requesting an appreciation note. Err: ${err}` });
+//     };
+// });
 
 // router to post a new thank you route
 router.post("/", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
+    //TODO: REVERT
+    // if (!req.session.logged_in) {
     //     return res.status(400).json({ msg: "You must be logged in first!" })
     // }
 
     try {
         const data = await Appreciation.create({
+            //TODO: REVERT
+            // SenderId: req.session.user.id,
+            // ReceiverId: req.body.receiver_id,
+            // message: req.body.message
             SenderId: req.body.sender_id,
             ReceiverId: req.body.receiver_id,
             message: req.body.message
@@ -43,43 +48,21 @@ router.post("/", async (req, res) => {
 
 });
 
-//route get an appreciation note by id
-router.get("/:id", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
-    try {
-        console.log(`Querying for an appreciation note with id: ${req.params.id}`);
-        const data = await Appreciation.findByPk(req.params.id);
-        console.log("Recieved appreciation note as: " + JSON.stringify(data));
-        if (!data) {
-            return res.status(404).json({ msg: "No appreciation note found with that id" });
-        }
-        res.status(200).json(data);
-
-    } catch (err) {
-        console.log(`Error while requesting an apreciation note. ${err}`)
-        res.status(500).json({ msg: `Error while requesting an appreciation note. Err: ${err}` });
-    };
-});
-
 // route to get appreciation notes received by an user
 router.get("/received/user/:id", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
-
-    let user_id;
-    if (req.session && req.session.user) {
-        user_id = req.session.user.id;
-    } else {
-        user_id = req.params.id
+    //Check user is logged in
+    if (!req.session.logged_in) {
+        return res.status(400).json({ msg: "You must be logged in first!" })
     }
+
+    // let user_id = req.session.user_id;
+    let user_id = req.params.id;
+
     try {
         console.log(`Querying appreciation notes received by user with id ${user_id}`);
         const data = await Appreciation.findAll({
+            include: [{ model: User, as: "Sender" }],
+            order: [['createdAt', 'DESC']],
             where: {
                 ReceiverId: user_id
             }
@@ -98,20 +81,18 @@ router.get("/received/user/:id", async (req, res) => {
 
 // route to get appreciation notes sent by an user
 router.get("/sent/user/:id", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
-
-    let user_id;
-    if (req.session && req.session.user) {
-        user_id = req.session.user.id;
-    } else {
-        user_id = req.params.id
+    //Check user is logged in
+    if (!req.session.logged_in) {
+        return res.status(400).json({ msg: "You must be logged in first!" })
     }
+
+    let user_id = req.params.id;//req.session.user_id;
+
     try {
         console.log(`Querying appreciation notes sent by user with id ${user_id}`);
         const data = await Appreciation.findAll({
+            include: [{ model: User, as: "Receiver" }],
+            order: [['createdAt', 'DESC']],
             where: {
                 SenderId: user_id
             }
@@ -128,12 +109,33 @@ router.get("/sent/user/:id", async (req, res) => {
     };
 });
 
+//route get an appreciation note by id
+router.get("/:id", async (req, res) => {
+    //Check user is logged in
+    if (!req.session.logged_in) {
+        return res.status(400).json({ msg: "You must be logged in first!" })
+    }
+    try {
+        console.log(`Querying for an appreciation note with id: ${req.params.id}`);
+        const data = await Appreciation.findByPk(req.params.id);
+        console.log("Recieved appreciation note as: " + JSON.stringify(data));
+        if (!data) {
+            return res.status(404).json({ msg: "No appreciation note found with that id" });
+        }
+        res.status(200).json(data);
+
+    } catch (err) {
+        console.log(`Error while requesting an apreciation note. ${err}`)
+        res.status(500).json({ msg: `Error while requesting an appreciation note. Err: ${err}` });
+    };
+});
+
 // route to delete appreciation notes received by an user
 router.delete("/:id", async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
+    //Check user is logged in
+    if (!req.session.logged_in) {
+        return res.status(400).json({ msg: "You must be logged in first!" })
+    }
 
     try {
         let id = req.params.id;
@@ -156,25 +158,12 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-// Implemented middle wear to ensure user does not try to update the unallowed fields
-const immutableFields = ['SenderId', "id", "ReceiverId", 'createdAt', 'updatedAt'];
-
-// Middleware to filter out immutable fields
-function filterImmutableFields(req, res, next) {
-    immutableFields.forEach(field => {
-        if (req.body[field] !== undefined) {
-            delete req.body[field];
-        }
-    });
-    next();
-}
-
 // Put call to edit an note
 router.put("/:id", filterImmutableFields, async (req, res) => {
-    //TODO: Check user is logged in
-    // if (!req.session.user.id) {
-    //     return res.status(400).json({ msg: "You must be logged in first!" })
-    // }
+    //Check user is logged in
+    if (!req.session.logged_in) {
+        return res.status(400).json({ msg: "You must be logged in first!" })
+    }
 
     try {
         let id = req.params.id;
