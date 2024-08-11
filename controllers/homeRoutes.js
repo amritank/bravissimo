@@ -37,8 +37,6 @@ router.get('/profile', withAuth, (req, res) => {
   });
 });
 
-
-
   
   module.exports = router;
  

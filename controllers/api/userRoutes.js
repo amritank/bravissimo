@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/register', async (req, res) => {
+  console.log("here in api/user/register");
   try {
     const userData = await User.create({
       firstName: req.body.firstName,

@@ -1,17 +1,28 @@
-// Initialize Cloudinary Upload Widget
-const uploadWidget = cloudinary.createUploadWidget({
-  cloudName: 'du8evfoox', 
-  uploadPreset: 'blank-profile-picture' 
+var myWidget = cloudinary.createUploadWidget({
+  cloudName: 'dwfvmcziw',
+  uploadPreset: 'bravissimo'
 }, (error, result) => {
   if (!error && result && result.event === "success") {
-    console.log('Done! Here is the image info: ', result.info);
-    document.querySelector('#profile_img').value = result.info.secure_url;
+      console.log('Done! Here is the image info: ', result.info);
   }
-});
+}
+)
 
-document.getElementById('upload_widget').addEventListener('click', function() {
-  uploadWidget.open();
+document.getElementById("upload_widget").addEventListener("click", function () {
+  myWidget.open();
 }, false);
+
+//this was my google api if we want to add the search function as well
+//   cloudinary.openUploadWidget({
+//   cloudName: "demo", uploadPreset: "testing",
+//   sources: [ 'local', 'url', 'image_search'],
+//   googleApiKey: 'AIzaSyBNaN6h0_g7t3Z5g91A9k3CP4QTg198d2U',
+//   searchBySites: ["all", "cloudinary.com"],
+//   searchByRights: true }, (error, result) => { });
+
+// document.getElementById('upload_widget').addEventListener('click', function() {
+//   uploadWidget.open();
+// }, false);
 
 
 
@@ -48,10 +59,29 @@ document.addEventListener('DOMContentLoaded', () => {
           const errorText = await response.text();
           alert(`Error: ${errorText}`);
         }
+        if (response.ok) {
+          let countdown = 5;
+          const messageDiv = document.getElementById('message');
+          messageDiv.innerHTML = `Successfully registered! You will be redirected to the login page in ${countdown} seconds...`;
+          const countdownInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+              messageDiv.innerHTML = `Successfully registered! You will be redirected to the login page in ${countdown} seconds...`;
+            } else {
+              clearInterval(countdownInterval);
+              window.location.href = '/login'; 
+            }
+          }, 1000); 
+        } else {
+          const errorText = await response.text();
+          alert(`Error: ${errorText}`);
+        }
       } catch (error) {
         console.error('Error registering:', error);
         alert('An error occurred. Please try again.');
+      
       }
     });
-  });
+  
+});
   
