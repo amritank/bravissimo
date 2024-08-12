@@ -3,7 +3,7 @@ const dataContainerEl = document.getElementById("dataContainer");
 const recvNoteCntEl = document.getElementById("recvdNotes");
 const sentNoteCntEl = document.getElementById("sentNotes");
 
-
+const alertMsgEl = document.getElementById('alertMsgContainer');
 const sendThanksFormEl = document.getElementById("sendThanksForm");
 const sendThanksContainerEl = document.getElementById('sendThanksContainer');
 const templaeEls = document.querySelectorAll('div[id^="img"]');
