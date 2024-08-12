@@ -13,8 +13,8 @@ var myWidget = cloudinary.createUploadWidget({
 }, (error, result) => {
   if (!error && result && result.event === "success") {
     console.log('Done! Here is the image info: ', result.info);
-    displayMsgInAlertContainer("Image uploaded successfully at: " + result.info.url, "info");
-    profileImgEl.value = result.info.url;
+    // displayMsgInAlertContainer("Image uploaded successfully at: " + result.info.url, "info");
+    profileImgEl.textContent = result.info.url;
   }
 })
 document.getElementById("upload_widget").addEventListener("click", function () {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cancelButton = document.querySelector('#btn-cancel');
 
   cancelButton.addEventListener('click', () => {
-    window.location.href = '/';
+    window.location.href = '/#login';
   });
 });
 
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastName = lastNameEl.value;
     const email = emailEl.value;
     const password = passwordEl.value;
-    const profileImg = profileImgEl.value;
+    const profileImg = profileImgEl.textContent;
     console.log("profile img value: ", profileImg);
 
     if (firstName === "" || lastName === "" || email === "" || password === "") {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayMsgInAlertContainer(`Successfully registered! You will be redirected to the login page in ${countdown} seconds...`, "info")
           } else {
             clearInterval(countdownInterval);
-            window.location.href = '/';
+            window.location.href = '/#login';
           }
         }, 1000);
       } else {

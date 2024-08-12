@@ -32,6 +32,11 @@ async function getUserData(user_id) {
 }
 
 router.post('/register', async (req, res) => {
+  if (req.body.profileImg === "") {
+    req.body.profileImg = "/images/nophoto.png"
+  }
+
+  console.log("Setting profile img: " + req.body.profileImg);
   try {
     const userData = await User.create({
       firstName: req.body.firstName,

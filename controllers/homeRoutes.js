@@ -30,11 +30,11 @@ router.get('/register', (req, res) => {
 });
 
 router.get("/sent", withAuth, async (req, res) => {
-  if (!req.session.logged_in) {
-    console.log("/sent route hit. User not logged in redirected to home page");
-    res.redirect('/');
-    return;
-  }
+  // if (!req.session.logged_in) {
+  //   console.log("/sent route hit. User not logged in redirected to home page");
+  //   res.redirect('/');
+  //   return;
+  // }
   // return object
   const data = {
     notes: {},
@@ -102,11 +102,11 @@ router.get("/sent", withAuth, async (req, res) => {
 });
 
 router.get("/received", withAuth, async (req, res) => {
-  if (!req.session.logged_in) {
-    console.log("/received route hit. User not logged in redirected to home page");
-    res.redirect('/');
-    return;
-  }
+  // if (!req.session.logged_in) {
+  //   console.log("/received route hit. User not logged in redirected to home page");
+  //   res.redirect('/');
+  //   return;
+  // }
   // return object
   const data = {
     notes: {},
@@ -173,11 +173,11 @@ router.get("/received", withAuth, async (req, res) => {
 
 
 router.get("/sendthanks", withAuth, async (req, res) => {
-  if (!req.session.logged_in) {
-    console.log("/sentthanks route hit. User not logged in redirected to home page");
-    res.redirect('/');
-    return;
-  }
+  // if (!req.session.logged_in) {
+  //   console.log("/sentthanks route hit. User not logged in redirected to home page");
+  //   res.redirect('/');
+  //   return;
+  // }
 
   const data = {
     notes: {},
