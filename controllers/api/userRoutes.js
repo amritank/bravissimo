@@ -53,6 +53,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
+
 router.post('/login', async (req, res) => {
   try {
     const { emailId, password } = req.body;
@@ -91,6 +92,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 // GET /user - Get user by ID
 router.get('/:id', withAuth, async (req, res) => {
   console.log('GET /:id route hit');
@@ -106,9 +108,9 @@ router.get('/:id', withAuth, async (req, res) => {
 });
 
 
-// GET /users and return only first name and last name for auto complete
+// GET /user gets all users and return only first name and last name for auto complete
 router.get('/', async (req, res) => {
-  console.log('GET all users route hit');
+  console.log('GET /api/user route hit. Getting all users.');
 
   if (!req.session.user_id) {
     return res.status(400).json({ msg: "You must be logged in first!" })
@@ -131,18 +133,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-
-
-// // If a POST request is made to /api/users/logout, the function checks the logged_in state in the request.session object and destroys that session if logged_in is true.
-// router.post('/logout', (req, res) => {
-//   if (req.session.logged_in) {
-//     req.session.destroy(() => {
-//       res.status(204).end();
-//     });
-//   } else {
-//     res.status(404).end();
-//   }
-// });
 
 router.delete('/logout', (req, res) => {
   console.log('Session', req.session);

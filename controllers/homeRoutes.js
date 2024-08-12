@@ -7,43 +7,31 @@ const { getUserData } = require("./api/userRoutes");
 
 // / Render the homepage
 router.get('/', (req, res) => {
-  console.log("req: ", req.session);
   if (req.session.logged_in) {
-    console.log("logged in");
+    console.log("/ route hit. User logged in redirected to received");
     res.redirect('/received');
     return;
   }
-  res.render('home');
-});
-
-// Render the login page
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
+  //TODO: Need Johannes changes for home handelbar
   res.render('home');
 });
 
 // Render the registration page
 router.get('/register', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/profile');
+  if (req.session.logged_in) {
+    console.log("/register route hit. User logged in redirected to received");
+    res.redirect('/received');
     return;
   }
   res.render('register');
 });
 
-// Render the user profile page, protected by withAuth middleware
-router.get('/profile', withAuth, (req, res) => {
-  // TODO: REVERT AND REMOVE 1
-  res.render('profile1', {
-    sessionuser: req.session.user,
-    logged_in: req.session.loggedIn,
-  });
-});
-
 router.get("/sent", withAuth, async (req, res) => {
+  if (!req.session.logged_in) {
+    console.log("/sent route hit. User not logged in redirected to home page");
+    res.redirect('/');
+    return;
+  }
   // return object
   const data = {
     notes: {},
@@ -111,6 +99,11 @@ router.get("/sent", withAuth, async (req, res) => {
 });
 
 router.get("/received", withAuth, async (req, res) => {
+  if (!req.session.logged_in) {
+    console.log("/received route hit. User not logged in redirected to home page");
+    res.redirect('/');
+    return;
+  }
   // return object
   const data = {
     notes: {},
@@ -120,7 +113,7 @@ router.get("/received", withAuth, async (req, res) => {
   // get user id from session object: 
   const user_id = req.session.user_id;
 
-  console.log(`---- Generating sent page for user id: ${user_id} -----`);
+  console.log(`---- Generating received page for user id: ${user_id} -----`);
 
   // Get user data for name 
   console.log('----- Getting user data by quering hte User db -----');
@@ -175,7 +168,14 @@ router.get("/received", withAuth, async (req, res) => {
   res.render('received', { data })
 });
 
+
 router.get("/sendthanks", withAuth, async (req, res) => {
+  if (!req.session.logged_in) {
+    console.log("/sentthanks route hit. User not logged in redirected to home page");
+    res.redirect('/');
+    return;
+  }
+
   const data = {
     notes: {},
     user: {}
@@ -184,10 +184,10 @@ router.get("/sendthanks", withAuth, async (req, res) => {
   // get user id from session object: 
   const user_id = req.session.user_id;
 
-  console.log(`---- Generating sent page for user id: ${user_id} -----`);
+  console.log(`---- Generating sentthanks page for user id: ${user_id} -----`);
 
   // Get user data for name 
-  console.log('----- Getting user data by quering hte User db -----');
+  console.log('----- Getting user data by quering the User db -----');
   const userDataResponse = await getUserData(user_id);
   console.log("User data from query: ", userDataResponse);
   const firstLetter = userDataResponse.data.firstName.charAt(0);

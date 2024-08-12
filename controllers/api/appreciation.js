@@ -149,7 +149,6 @@ router.delete("/:id", async (req, res) => {
     };
 });
 
-
 // Put call to edit an note
 router.put("/:id", filterImmutableFields, async (req, res) => {
     //Check user is logged in
