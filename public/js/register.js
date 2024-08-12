@@ -4,6 +4,8 @@ const lastNameEl = document.querySelector('#last_name');
 const emailEl = document.querySelector('#email_id');
 const passwordEl = document.querySelector('#password');
 const profileImgEl = document.querySelector('#profile_img');
+const profileImgLblEl = document.querySelector('#profile_img_lbl');
+
 
 var myWidget = cloudinary.createUploadWidget({
   cloudName: window.CLOUDINARY_CLOUD_NAME,
@@ -11,6 +13,8 @@ var myWidget = cloudinary.createUploadWidget({
 }, (error, result) => {
   if (!error && result && result.event === "success") {
     console.log('Done! Here is the image info: ', result.info);
+    displayMsgInAlertContainer("Image uploaded successfully at: " + result.info.url, "info");
+    profileImgEl.value = result.info.url;
   }
 })
 document.getElementById("upload_widget").addEventListener("click", function () {
@@ -63,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = emailEl.value;
     const password = passwordEl.value;
     const profileImg = profileImgEl.value;
+    console.log("profile img value: ", profileImg);
 
     if (firstName === "" || lastName === "" || email === "" || password === "") {
       return displayMsgInAlertContainer("Please fill all the fields in the form!", "danger");
