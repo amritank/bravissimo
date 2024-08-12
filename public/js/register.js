@@ -1,29 +1,22 @@
 var myWidget = cloudinary.createUploadWidget({
-  cloudName: 'dwfvmcziw',
-  uploadPreset: 'bravissimo'
+  cloudName: window.CLOUDINARY_CLOUD_NAME,
+  uploadPreset: window.CLOUDINARY_UPLOAD_PRESET,
 }, (error, result) => {
   if (!error && result && result.event === "success") {
       console.log('Done! Here is the image info: ', result.info);
   }
-}
-)
-
+})
 document.getElementById("upload_widget").addEventListener("click", function () {
   myWidget.open();
 }, false);
 
-//this was my google api if we want to add the search function as well
-//   cloudinary.openUploadWidget({
-//   cloudName: "demo", uploadPreset: "testing",
-//   sources: [ 'local', 'url', 'image_search'],
-//   googleApiKey: 'AIzaSyBNaN6h0_g7t3Z5g91A9k3CP4QTg198d2U',
-//   searchBySites: ["all", "cloudinary.com"],
-//   searchByRights: true }, (error, result) => { });
+document.addEventListener('DOMContentLoaded', () => {
+  const cancelButton = document.querySelector('#btn-cancel');
 
-// document.getElementById('upload_widget').addEventListener('click', function() {
-//   uploadWidget.open();
-// }, false);
-
+  cancelButton.addEventListener('click', () => {
+    window.location.href = '/'; 
+  });
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,4 +77,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   
 });
-  

@@ -20,7 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    height: 100vh;
     background: url('/images/hands.png') no-repeat bottom center;
     background-size: cover;
   }
@@ -30,15 +30,15 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 400px;
-    max-width: 90%;
-    text-align: center;
+    text-align: left;
   }
-  
+
+
   h1 {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
+    font-weight: bold;
   }
   
   .form-label {
@@ -63,20 +63,10 @@ body {
   .btn-secondary:hover {
     background-color: #5a6268;
   } 
-   
 
-  footer {
-    text-align: center;
-    padding: 10px 0;
-    font-size: 12px;
-    color: #666;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  .upload-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
   }
-  
-  footer p {
-    margin: 0;
-  }
-  
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const withAuth = require('../utils/auth');
 const { User, Appreciation } = require("../models")
 
+
   // / Render the homepage
 router.get('/', (req, res) => {
   res.render('home', {
@@ -26,7 +27,10 @@ router.get('/register', (req, res) => {
     res.redirect('/profile');
     return;
   }
-  res.render('register');
+  res.render('register', {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+  });
 });
 
 // Render the user profile page, protected by withAuth middleware
