@@ -1,0 +1,13 @@
+<div class="col-sm-12 col-md-2 p-md-4 p-sm-2">
+    {{{data.user.profileimg}}}
+</div>
+<div class="col-md-9 col-sm-12 p-md-4 p-sm-2">
+    <div id="welcome">
+        <h3><span id="user">Hello, {{data.user.name}}!</span></h3>
+        <span id="recvdNotes">{{data.user.received}}</span>
+        <i data-toggle="tooltip" data-placement="bottom" title="Received" class="fa-solid fa-heart">
+        </i>
+        <span id="sentNotes">{{data.user.sent}}</span> <span data-toggle="tooltip" data-placement="top"
+            title="Sent">🎁</span>
+    </div>
+</div>
