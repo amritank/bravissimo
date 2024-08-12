@@ -12,7 +12,12 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = new express();
 
 // initialize hb
-const hbs = exphbs.create({});
+const hbs = exphbs.create({
+  helpers: {
+    eq: (a, b) => a === b,
+    // You can add more helpers here if needed
+  }
+});
 
 // configure hb as the templating engine
 app.engine('handlebars', hbs.engine);
@@ -40,8 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes);
 
 sequelize.sync({ force: false })
-    .then(() => {
-        app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
-    });
+  .then(() => {
+    app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
+  });
 
 

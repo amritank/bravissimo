@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --Rubik: "Rubik", sans-serif;
+    --bg: rgb(204, 228, 247);
+    --cbg: rgb(249, 249, 249);
+}
+
+body {
+    background-image: url("/images/hands.png");
+    background-size: cover;
+    background-color: var(--bg);
+    font-family: var(--Rubik);
+}
+
+header {
+    background-color: var(--bg);
+    padding: 0;
+}
+
+.navbar {
+    padding: 0 !important;
+}
+
+.navbar {
+    background-color: var(--bg);
+    padding: 0;
+}
+
+.navbar-brand {
+    padding-left: 20px;
+}
+
+#logout {
+    padding-right: 20px;
+}
+
+#mainContainer {
+    background-color: var(--cbg);
+    border-radius: 50px;
+    min-height: 90vh;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-gutter {
+    --bs-gutter-x: 2rem;
+}
+
+#profileImg {
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid black;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    background-color: var(--bg);
+}
+
+a {
+    text-decoration: none;
+}
+
+#dataContainer {
+    font-family: var(--Rubik);
+    border-radius: 5px;
+}
+
+.grey-qo-regular {
+    font-family: "Grey Qo", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.fa-heart {
+    color: red;
+}
+
+.fa-rocket {
+    color: orange;
+}
+
+div[id^="img"] {
+    background-size: cover;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    border: 1px solid black;
+}
+
+.letters {
+    background-color: white;
+    margin-right: 5px;
+    display: inline-block;
+    font-size: 3.5vmin;
+}
+
+.letters:nth-child(odd) {
+    transform: rotate(10deg);
+}
+
+.letters:nth-child(even) {
+    transform: rotate(-5deg);
+}
+
+#img0 {
+    background-image: linear-gradient(white, white);
+}
+
+#img1 {
+    background-image: url('/images/thankyou_template_1.jpg');
+}
+
+#img2 {
+    background-image: url('/images/thankyou_template_2.jpeg');
+}
+
+#img3 {
+    background-image: url('/images/thankyou_template_3.jpeg');
+}
+
+#img4 {
+    background-image: url('/images/thankyou_template_4.jpg');
+}
+
+#img5 {
+    background-image: url('/images/thankyou_template_5.jpg');
+}
+
+#img6 {
+    background-image: url('/images/thankyou_template_6.jpg');
+}
+
+#receiver {
+    font-family: var(--Rubik) !important;
+}
+
+#autoComplete_wrapper {
+    position: relative;
+}
+
+#autoComplete_list_1 {
+    list-style-type: none;
+    border: 0.5px solid lightgray;
+    border-radius: .25rem;
+    min-width: 500px;
+    font-family: var(--Rubik) !important;
+    padding: 0;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    color: red;
+}
+
+li[id^="autoComplete_result"] {
+    border-bottom: 0.5px solid lightgray;
+    font-family: var(--Rubik) !important;
+    padding: 0;
+
+}
+
+/* Styles for small screens */
+@media (max-width: 769px) {
+    #profileImg {
+        width: 50%;
+        /* 50% width on small screens */
+        margin: 0 auto;
+        /* Center the div horizontally */
+    }
+}

@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
-const sequelize = require('../config/connection'); // Ensure this path is correct
+const sequelize = require('../config/connection');
 
 class User extends Model {
   checkPassword(loginPw) {
@@ -49,8 +49,8 @@ User.init(
         return updatedUserData;
       },
     },
-    sequelize, 
-   
+    sequelize,
+
   }
 );
 

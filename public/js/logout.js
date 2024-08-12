@@ -1,16 +1,17 @@
-const logout = async () => {
-    // Send a POST request to the logout endpoint
-const response = await fetch('/api/users/logout', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
+const logout = document.getElementById("logout");
 
-  if (response.ok) {
-    // If logout is successful, redirect to the homepage
-    document.location.replace('/');
-  } else {
-    alert(response.statusText);
+logout.addEventListener('click', async () => {
+  try {
+    const response = await fetch('/api/user/logout', {
+      method: 'DELETE',
+    });
+    if (response.ok) {
+      console.log('sucessfully logged out')
+      window.location.href = '/';
+    } else {
+      console.log("Error while trying to logged out: ", response);
+    }
+  } catch (err) {
+    console.log("Error while trying to log out: ", err);
   }
-};
-// Attach the logout function to the click event of the logout button
-document.querySelector('#logout').addEventListener('click', logout);
+});
