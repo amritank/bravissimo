@@ -1,0 +1,88 @@
+<link rel='stylesheet' type='text/css' href='/css/profile.css' />
+<header>
+
+    <section id="nav-bar">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+            <a class=" navbar-brand grey-qo-regular" style="font-size: 48px" href="#">BraviSSimo</a>
+            <div class="navbar-nav">
+                <a class="nav-link" id="logout" href="#">Logout</a>
+            </div>
+
+        </nav>
+    </section>
+</header>
+<main>
+    <div id="mainContainer" class="container custom-container mt-5 mb-5 custom-gutter">
+        <div class="row">
+            <div class="col-sm-12 col-md-2 p-md-4 p-sm-2">
+
+                {{{data.user.profileimg}}}
+
+
+
+            </div>
+            <div class="col-md-9 col-sm-12 p-md-4 p-sm-2">
+                <div id="welcome">
+                    <h3><span id="user">Hello, {{data.user.name}}!</span></h3>
+                    <span id="recvdNotes">{{data.user.received}}</span>
+                    <i data-toggle="tooltip" data-placement="bottom" title="Received" class="fa-solid fa-heart">
+                    </i>
+                    <span id="sentNotes">{{data.user.sent}}</span> <span data-toggle="tooltip" data-placement="top"
+                        title="Sent">🎁</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-2 p-sm-2 ">
+                <ul class="list-group list-group-flush ">
+                    <li class="list-group-item"><a href="/received" id="recvdNotesLink">Received</a></li>
+                    <li class="list-group-item"><a href="/sent" id="sentNotesLink">Sent</a></li>
+                    <li class="list-group-item"><a href="/sendthanks" id="sendThanksLink">Send Thanks</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-9">
+
+                <div class="mb-2 " id="dataContainer">
+                    {{#if (eq data.notes.status 404)}}
+                    <div id="alert404MsgContainer" class="alert alert-primary mb-1">User has not sent any <b>Thank
+                            You</b>
+                        notes!</div>
+                    {{else}}
+                    {{#if (eq data.notes.status 500)}}
+                    <div id="alert500MsgContainer" class="alert alert-danger mb-1">Failed to fetch sent information.
+                        Error:
+                        {{data.notes.error}}</div>
+                    {{else}}
+                    {{#each data.notes.data as |note|}}
+                    <div class="card mb-4" style="box-shadow: 10px 5px 5px lightgray">
+                        <div class="card-body">
+
+                            {{{note.message}}}
+                            <p class="text-black-50 text-end">
+                                <small>{{note.user}}</small>
+                            </p>
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+{{!-- <footer class="mt-5 border border-top" style="background-color: rgb(249,249,249); background-image: none"
+    class="mt-5 h-23 d-flex align-items-center justify-content-center">
+    <div class="text-center ">
+
+        <p class="lh-1 p-5 text-dark font-weight-bold" style="font-weight: bolder"><i class="fa-solid fa-minus"></i><i
+                class="fa-solid fa-minus"></i><i class="fa-solid fa-minus"></i><i class="fa-solid fa-minus"></i><i
+                class="fa-solid fa-minus"></i>BraviSSimo<i class="fa-solid fa-minus"></i><i
+                class="fa-solid fa-minus"></i><i class="fa-solid fa-minus"></i><i class="fa-solid fa-minus"></i><i
+                class="fa-solid fa-minus"></i></p>
+    </div>
+</footer> --}}
+<script src="/js/logout.js"></script>
+
+{{!-- d-flex justify-content-center align-items-center --}}

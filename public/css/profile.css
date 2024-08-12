@@ -23,8 +23,20 @@ header {
 }
 
 .navbar {
+    padding: 0 !important;
+}
+
+.navbar {
     background-color: var(--bg);
     padding: 0;
+}
+
+.navbar-brand {
+    padding-left: 20px;
+}
+
+#logout {
+    padding-right: 20px;
 }
 
 #mainContainer {
@@ -43,6 +55,14 @@ header {
     border: 1px solid black;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    background-color: var(--bg);
+}
+
 a {
     text-decoration: none;
 }
@@ -52,16 +72,18 @@ a {
     border-radius: 5px;
 }
 
+.grey-qo-regular {
+    font-family: "Grey Qo", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
 .fa-heart {
     color: red;
 }
 
 .fa-rocket {
     color: orange;
-}
-
-#sendThanksContainer {
-    display: none;
 }
 
 div[id^="img"] {
@@ -142,4 +164,14 @@ li[id^="autoComplete_result"] {
     font-family: var(--Rubik) !important;
     padding: 0;
 
+}
+
+/* Styles for small screens */
+@media (max-width: 769px) {
+    #profileImg {
+        width: 50%;
+        /* 50% width on small screens */
+        margin: 0 auto;
+        /* Center the div horizontally */
+    }
 }

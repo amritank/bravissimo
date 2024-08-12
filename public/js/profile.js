@@ -1,10 +1,7 @@
-const recvNotesEle = document.getElementById("recvdNotesLink");
+
 const dataContainerEl = document.getElementById("dataContainer");
 const recvNoteCntEl = document.getElementById("recvdNotes");
 const sentNoteCntEl = document.getElementById("sentNotes");
-const recvdNotesLinkEl = document.getElementById("recvdNotesLink");
-const sentNotesLinkEl = document.getElementById("sentNotesLink");
-const sendThanksLinkEL = document.getElementById("sendThanksLink");
 const alertMsgEl = document.getElementById("alertMsgContainer");
 const sendThanksFormEl = document.getElementById("sendThanksForm");
 const sendThanksContainerEl = document.getElementById('sendThanksContainer');
@@ -12,7 +9,7 @@ const templaeEls = document.querySelectorAll('div[id^="img"]');
 const msgEl = document.getElementById("thankyounote");
 const receiverUserEl = document.getElementById("receiver");
 const reset = document.getElementById("reset");
-const logout = document.getElementById("logout");
+
 
 let recvdNotesCnt = 0;
 let sentNotesCnt = 0;
@@ -45,149 +42,7 @@ function clearFields() {
 }
 
 
-// ----- Functions to render html  ----
-function renderUserDetails(userData) {
-    console.log("In render: ", userData);
-    // render name
-    const userEl = document.getElementById("user")
-    const firstLetter = userData.firstName.charAt(0);
-    const rest = userData.firstName.slice(1)
-    userEl.innerHTML = "Hello, " + firstLetter.toUpperCase() + rest + "!";
-
-    // render profile image
-    const profileImgEl = document.getElementById("profileImg");
-    profileImgEl.style.backgroundImage = "url(" + userData.profileImg + ")";
-    profileImgEl.style.backgroundSize = "cover";
-
-}
-
-// Render receiver notes to ui
-function renderReceiveNotesHTML(data) {
-    console.log("rendering received notes:");
-    // for (entry of data) {
-    const notes = []
-    for (let i = 0; i < data.length; i++) {
-        let entry = data[i];
-        const newNote = {}
-        newNote.message = entry.message;
-        const userInfo = "By " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
-            (new Date(entry.createdAt))
-                .toLocaleString([], {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    timeZoneName: 'short'
-                });
-        console.log("[AMU] info", userInfo);
-        notes.push(newNote);
-
-        // const divContainerEl = document.createElement("div");
-        // divContainerEl.style.boxShadow = "10px 5px 5px lightgray";
-        // divContainerEl.classList.add("card", "mb-4");
-        // const divContentContainerEl = document.createElement("div");
-        // divContentContainerEl.classList.add("card-body", "h-25");
-        // divContentContainerEl.innerHTML = entry.message;
-        // const pEl = document.createElement("p");
-        // pEl.style.textAlign = "right";
-        // pEl.classList.add("text-black-50");
-        // pEl.innerHTML = "<small>By " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
-        //     (new Date(entry.createdAt))
-        //         .toLocaleString([], {
-        //             year: 'numeric',
-        //             month: 'short',
-        //             day: 'numeric',
-        //             hour: 'numeric',
-        //             minute: '2-digit',
-        //             timeZoneName: 'short'
-        //         })
-        //     + "</small";
-        // divContentContainerEl.append(pEl);
-        // divContainerEl.append(divContentContainerEl);
-        // dataContainerEl.appendChild(divContainerEl);
-    }
-}
-
-// Render sender notes to ui
-function renderSentNotesHTML(data) {
-    for (entry of data) {
-        const divContainerEl = document.createElement("div");
-        divContainerEl.style.boxShadow = "10px 5px 5px lightgray";
-        divContainerEl.classList.add("card", "mb-4");
-        const divContentContainerEl = document.createElement("div");
-        divContentContainerEl.classList.add("card-body", "h-50");
-        divContentContainerEl.innerHTML = entry.message;
-        const pEl = document.createElement("p");
-        pEl.style.textAlign = "right";
-        pEl.classList.add("text-black-50");
-        pEl.innerHTML = "<small>To " + entry.Receiver.firstName + " " + entry.Receiver.lastName + " on " +
-            (new Date(entry.createdAt))
-                .toLocaleString([], {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    timeZoneName: 'short'
-                })
-            + "</small";
-        divContentContainerEl.append(pEl);
-        divContainerEl.append(divContentContainerEl);
-        dataContainerEl.appendChild(divContainerEl);
-        // TODO: We als need to show the edit and delete icons
-        // save the note id as a data attribute and add a click event handler for edit and delete
-    }
-}
-
-// Update the receiveed and sent notes count to the ui
-function updateRecvdAndSentThanksCount(recvCnt, sentCnt) {
-    recvNoteCntEl.textContent = recvCnt;
-    sentNoteCntEl.textContent = sentCnt;
-}
-
 // ----- Functions to make api calls ----
-// GET /api/user/:id to getch user id by pk
-async function getUserData(loggedUserId) {
-    try {
-        const res = await fetch(`/api/user/${loggedUserId}`);
-        const data = await res.json();
-        const status = res.status;
-        return data;
-
-    } catch (err) {
-        // TODO: Render error message in an alert box
-        console.log("error: ", err)
-    };
-}
-
-//GET /api/appreciation/received
-async function getThanksRecvdByUser(loggedUserId) {
-    try {
-        const res = await fetch(`/api/appreciation/received/user/${loggedUserId}`);
-        const data = await res.json();
-        const status = res.status;
-        return { status, data };
-
-    } catch (err) {
-        // TODO: Render error message in an alert box
-        console.log("error: ", err)
-    };
-}
-
-// GET /api/appreciation/seent
-async function getThanksSentByUser(loggedUserId) {
-    try {
-        const res = await fetch(`/api/appreciation/sent/user/${loggedUserId}`);
-        const data = await res.json();
-        const status = res.status;
-        return { status, data };
-
-    } catch (err) {
-        // TODO: Render error message in an alert box
-        console.log("error: ", err)
-    };
-}
 
 // GET /sessiondata
 async function getSessionData() {
@@ -225,7 +80,7 @@ async function thanksFormSubmitEventHandler(event) {
         return displayMsgInAlertContainer("Please fill all the fields in the form!", "danger");
     } else {
         // construct the note 
-        const noteData = `<div class=\"h-50\" style=\"background-size: cover; background-position: center; background-image:linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),url('${selectedTemplateLink}')\">${msg}</div>`
+        const noteData = `<div class=\"h-50\" style=\"min-height: 150px; background-size: cover; background-position: center; background-image:linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),url('${selectedTemplateLink}')\">${msg}</div>`
         console.log(noteData);
 
         // get logged in user id
@@ -261,24 +116,14 @@ async function thanksFormSubmitEventHandler(event) {
             displayMsgInAlertContainer("Error while posting an appreciation. " + error, "danger");
             //TODO:  update sent count value
 
+
+
             // clear the input msg
             clearFields();
         }
     }
     // TODO: 
     return;
-}
-
-// Handle send thanks click event
-function handleSendThanksClickEvent() {
-    // TODO: 
-    // Render form
-    // Render thank you templates
-    // Add event listener for form submit
-    dataContainerEl.innerHTML = "";
-    sendThanksContainerEl.style.display = "block";
-    clearAlertMsgContainer();
-    clearFields();
 }
 
 // Tasks to perform when the page loads
@@ -294,7 +139,7 @@ async function initWindowFunction() {
         data: {
             src: async function (query) {
                 try {
-                    const response = await fetch(`api / user / `);
+                    const response = await fetch(`api/user/`);
                     const data = await response.json();
 
                     return data; // Return the fetched data
@@ -314,83 +159,14 @@ async function initWindowFunction() {
                     const selection = event.detail.selection.value;
                     console.log("selection: ", selection);
                     autoCompleteJS.input.value = selection;
+                    document.getElementById("autoComplete_list_1").style.display = "hidden"
                 }
             }
         }
     });
 
-    Promise.all([getUserData(loggedUserId), getThanksRecvdByUser(loggedUserId), getThanksSentByUser(loggedUserId)])
-        .then(([userdataResponse, receivedResponse, sentResponse]) => {
-            //render user data
-            renderUserDetails(userdataResponse);
-
-            const { status: receivedStatus, data: receivedData } = receivedResponse;
-            const { status: sentStatus, data: sentData } = sentResponse;
-            dataContainerEl.innerHTML = "";
-            sendThanksContainerEl.style.display = "none";
-            clearAlertMsgContainer();
-
-            // Process received notes
-            if (receivedStatus === 404) {
-                displayMsgInAlertContainer("User has not received any Thank You notes!", 'info');
-            } else {
-                recvdNotesCnt = receivedData.length;
-                renderReceiveNotesHTML(receivedData);
-            }
-
-            if (sentStatus !== 404) {
-                sentNotesCnt = sentData.length;
-            }
-
-            // Log the total counts after both API calls have completed
-            console.log(`Total sent notes: ${sentNotesCnt} and received notes: ${recvdNotesCnt} `);
-            // Udpate total recvd and sent thanks count to html
-            updateRecvdAndSentThanksCount(recvdNotesCnt, sentNotesCnt);
-
-        })
-        .catch((err) => console.error("Error in fetching received and sent notes data: ", err));
 }
 
-// Tasks to perform when the Received link is clicked
-recvdNotesLinkEl.addEventListener("click", async () => {
-    const sessionData = await getSessionData();
-    const loggedUserId = sessionData.user_id
-    console.log("logged In user id: ", loggedUserId);
-    getThanksRecvdByUser(loggedUserId).then(({ status, data }) => {
-        dataContainerEl.innerHTML = "";
-        sendThanksContainerEl.style.display = "none";
-        clearAlertMsgContainer();
-        if (status === 404) {
-            displayMsgInAlertContainer("User has not received any Thank You notes!", "info");
-        } else {
-            recvdNotesCnt = data.length;
-            updateRecvdAndSentThanksCount(recvdNotesCnt, sentNotesCnt);
-            renderReceiveNotesHTML(data);
-        }
-    });
-});
-
-// Tasks to perform when the Sent link is clicked
-sentNotesLinkEl.addEventListener("click", async () => {
-    const sessionData = await getSessionData();
-    const loggedUserId = sessionData.user_id
-    console.log("logged In user id: ", loggedUserId);
-    getThanksSentByUser(loggedUserId).then(({ status, data }) => {
-        dataContainerEl.innerHTML = "";
-        sendThanksContainerEl.style.display = "none";
-        clearAlertMsgContainer();
-        if (status === 404) {
-            displayMsgInAlertContainer("User has not sent any Thank You notes!", "info");
-        } else {
-            sentNotesCnt = data.length;
-            renderSentNotesHTML(data);
-            updateRecvdAndSentThanksCount(recvdNotesCnt, sentNotesCnt);
-        }
-    });
-});
-
-// Tasks to perform when the Send Thanks link is clicked
-sendThanksLinkEL.addEventListener("click", handleSendThanksClickEvent);
 
 // Tasks to perform when send thanks form is submitted
 sendThanksFormEl.addEventListener('submit', thanksFormSubmitEventHandler);
@@ -415,20 +191,6 @@ reset.addEventListener("click", () => {
     clearAlertMsgContainer();
 });
 
-logout.addEventListener('click', async () => {
-    try {
-        const response = await fetch('/api/user/logout', {
-            method: 'DELETE',
-        });
-        if (response.ok) {
-            console.log('sucessfully logged out')
-            window.location.href = '/';
-        } else {
-            console.log("Error while trying to logged out: ", response);
-        }
-    } catch (err) {
-        console.log("Error while trying to log out: ", err);
-    }
-});
+
 
 window.onload = initWindowFunction;
