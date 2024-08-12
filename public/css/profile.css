@@ -43,6 +43,7 @@ header {
     background-color: var(--cbg);
     border-radius: 50px;
     min-height: 90vh;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .custom-gutter {

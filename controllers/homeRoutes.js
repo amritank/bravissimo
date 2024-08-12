@@ -23,7 +23,10 @@ router.get('/register', (req, res) => {
     res.redirect('/received');
     return;
   }
-  res.render('register');
+  res.render('register', {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
+  });
 });
 
 router.get("/sent", withAuth, async (req, res) => {
