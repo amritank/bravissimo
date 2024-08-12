@@ -11,10 +11,13 @@
 }
 
 body {
-    background-image: url("/images/hands.png");
+    background-image: url("/images/hands_cropped.png");
     background-size: cover;
+    background-position: bottom;
     background-color: var(--bg);
     font-family: var(--Rubik);
+    background-size: 40% auto;
+    background-repeat: repeat-x;
 }
 
 header {

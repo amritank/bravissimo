@@ -35,7 +35,7 @@ User.init(
     },
     profileImg: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

@@ -4,7 +4,23 @@
     box-sizing: border-box;
 }
 
-body {
+:root {
+    --Rubik: "Rubik", sans-serif;
+    --bg: rgb(204, 228, 247);
+    --cbg: rgb(249, 249, 249);
+}
+
+.grey-qo-regular {
+    font-family: "Grey Qo", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.navbar-brand {
+    padding-left: 20px;
+}
+
+/* body {
     margin: 0;
     font-family: "Rubik", sans-serif;
     background-color: rgb(204, 228, 247);
@@ -12,7 +28,22 @@ body {
     flex-direction: column;
     height: 100vh;
     justify-content: center;
+    background-image: url("/images/hands_cropped.png");
+    background-size: 40% auto;
+    background-repeat: repeat-x;
+    background-size: cover;
+    background-position: bottom;
 
+} */
+
+body {
+    background-image: url("/images/hands_cropped.png");
+    background-size: cover;
+    background-position: bottom;
+    background-color: var(--bg);
+    font-family: var(--Rubik);
+    background-size: 40% auto;
+    background-repeat: repeat-x;
 }
 
 .register-background {
@@ -20,8 +51,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: url('/images/hands.png') no-repeat bottom center;
-    background-size: cover;
+    /* background: url('/images/hands.png') no-repeat bottom center;
+    background-size: cover; */
 }
 
 .register-box {
@@ -63,7 +94,7 @@ h1 {
     background-color: #5a6268;
 } */
 
-.upload-link {
+#upload_widget {
     text-decoration: underline;
     cursor: pointer;
     color: blue;
