@@ -161,11 +161,6 @@ router.get("/received", withAuth, async (req, res) => {
           });
 
       newNote.user = userInfo;
-      if (i % 2 == 0) {
-        newNote.isEven = true;
-      } else {
-        newNote.isOdd = true;
-      }
       tempNotes.push(newNote);
     }
     receivedResponse.data = tempNotes;
