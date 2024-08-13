@@ -67,7 +67,9 @@ router.get("/sent", withAuth, async (req, res) => {
       let entry = sentNotes[i];
       const newNote = {}
       newNote.message = entry.message;
-      const userInfo = "To " + entry.Receiver.firstName + " " + entry.Receiver.lastName + " on " +
+      const mfname = entry.Receiver.firstName.charAt(0).toUpperCase() + entry.Receiver.firstName.slice(1);
+      const mlname = entry.Receiver.lastName.charAt(0).toUpperCase() + entry.Receiver.lastName.slice(1);
+      const userInfo = "To " + mfname + " " + mlname + " on " +
         (new Date(entry.createdAt))
           .toLocaleString([], {
             year: 'numeric',
@@ -145,7 +147,9 @@ router.get("/received", withAuth, async (req, res) => {
       let entry = recvNotes[i];
       const newNote = {}
       newNote.message = entry.message;
-      const userInfo = "From " + entry.Sender.firstName + " " + entry.Sender.lastName + " on " +
+      const mfname = entry.Sender.firstName.charAt(0).toUpperCase() + entry.Sender.firstName.slice(1);
+      const mlname = entry.Sender.lastName.charAt(0).toUpperCase() + entry.Sender.lastName.slice(1);
+      const userInfo = "From " + mfname + " " + mlname + " on " +
         (new Date(entry.createdAt))
           .toLocaleString([], {
             year: 'numeric',
@@ -157,6 +161,11 @@ router.get("/received", withAuth, async (req, res) => {
           });
 
       newNote.user = userInfo;
+      if (i % 2 == 0) {
+        newNote.isEven = true;
+      } else {
+        newNote.isOdd = true;
+      }
       tempNotes.push(newNote);
     }
     receivedResponse.data = tempNotes;

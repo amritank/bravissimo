@@ -180,3 +180,15 @@ li[id^="autoComplete_result"] {
         /* Center the div horizontally */
     }
 }
+
+@media (max-width: 1200px) {
+
+    /* Adjust this max-width value as needed */
+    .custom-col {
+        flex: 0 0 100%;
+        /* Full width */
+        max-width: 100%;
+        /* Full width */
+
+    }
+}

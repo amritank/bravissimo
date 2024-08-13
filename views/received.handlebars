@@ -26,16 +26,20 @@
                         Error:
                         {{data.notes.error}}</div>
                     {{else}}
-                    {{#each data.notes.data as |note|}}
-                    <div class="card mb-4" style="box-shadow: 10px 5px 5px lightgray">
-                        <div class="card-body">
-                            {{{note.message}}}
-                            <p class="text-black-50 text-end">
-                                <small>{{note.user}}</small>
-                            </p>
+                    <div class="row">
+                        {{#each data.notes.data as |note|}}
+                        <div class="col-md-6 mb-4 custom-col">
+                            <div class="card mb-4" style="box-shadow: 10px 5px 5px lightgray">
+                                <div class="card-body">
+                                    {{{note.message}}}
+                                    <p class="text-black-50 text-end">
+                                        <small>{{note.user}}</small>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
                     {{/if}}
                     {{/if}}
                 </div>
