@@ -176,6 +176,19 @@ li[id^="autoComplete_result"] {
         width: 50%;
         /* 50% width on small screens */
         margin: 0 auto;
+        margin-top: 10px;
         /* Center the div horizontally */
+    }
+}
+
+@media (max-width: 1200px) {
+
+    /* Adjust this max-width value as needed */
+    .custom-col {
+        flex: 0 0 100%;
+        /* Full width */
+        max-width: 100%;
+        /* Full width */
+
     }
 }

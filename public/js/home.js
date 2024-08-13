@@ -2,30 +2,29 @@ const alertMsgEl = document.getElementById("alertMsgContainer");
 const emailEl = document.querySelector('#emailId');
 const pwdEl = document.querySelector('#password');
 
-function clearAlertMsgContainer() {
-  alertMsgEl.textContent = ""
-  alertMsgEl.display = "none";
-  alertMsgEl.classList.remove("alert-primary");
-  alertMsgEl.classList.remove("alert-danger");
-  alertMsgEl.classList.remove("alert");
-  alertMsgEl.classList.remove("mb-5");
-}
+// function clearAlertMsgContainer() {
+//   alertMsgEl.textContent = ""
+//   alertMsgEl.display = "none";
+//   alertMsgEl.classList.remove("alert-primary");
+//   alertMsgEl.classList.remove("alert-danger");
+//   alertMsgEl.classList.remove("alert");
+//   alertMsgEl.classList.remove("mb-5");
+// }
 
-function displayMsgInAlertContainer(msg, msgType) {
-  alertMsgEl.display = "block";
-  alertMsgEl.textContent = msg;
-  if (msgType === "info") {
-    alertMsgEl.classList.add("alert", "alert-primary", "mb-1");
-  } else {
-    alertMsgEl.classList.add("alert", "alert-danger", "mb-1");
-  }
-}
+// function displayMsgInAlertContainer(msg, msgType) {
+//   alertMsgEl.display = "block";
+//   alertMsgEl.textContent = msg;
+//   if (msgType === "info") {
+//     alertMsgEl.classList.add("alert", "alert-primary", "mb-1");
+//   } else {
+//     alertMsgEl.classList.add("alert", "alert-danger", "mb-1");
+//   }
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('#loginForm');
-  console.log("here");
+
   loginForm.addEventListener('submit', async (e) => {
-    console.log("here");
     e.preventDefault();
 
     const email = emailEl.value.trim();
@@ -46,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.ok) {
         window.location.href = '/received';
       } else {
-        const errorText = await response.text();
-        alert(`Error: ${errorText}`);
+        const errorText = await response.json();
+        return displayMsgInAlertContainer(errorText.message, "danger");
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('An error occurred. Please try again.');
+      return displayMsgInAlertContainer("Unexpected error while trying to login. Error: " + error, "danger");
     }
   });
 });

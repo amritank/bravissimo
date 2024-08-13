@@ -15,3 +15,4 @@ logout.addEventListener('click', async () => {
     console.log("Error while trying to log out: ", err);
   }
 });
+

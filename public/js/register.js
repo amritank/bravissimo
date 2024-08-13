@@ -7,6 +7,7 @@ const profileImgEl = document.querySelector('#profile_img');
 const profileImgLblEl = document.querySelector('#profile_img_lbl');
 
 
+// cloudinary widget
 var myWidget = cloudinary.createUploadWidget({
   cloudName: window.CLOUDINARY_CLOUD_NAME,
   uploadPreset: window.CLOUDINARY_UPLOAD_PRESET,
@@ -21,6 +22,7 @@ document.getElementById("upload_widget").addEventListener("click", function () {
   myWidget.open();
 }, false);
 
+// Event listeners
 document.addEventListener('DOMContentLoaded', () => {
   const cancelButton = document.querySelector('#btn-cancel');
 
@@ -35,26 +37,45 @@ function clearFields() {
   lastNameEl.value = "";
   emailEl.value = "";
   passwordEl.value = "";
+  profileImgEl.textContent = "";
 }
 
-function clearAlertMsgContainer() {
-  alertMsgEl.textContent = ""
-  alertMsgEl.display = "none";
-  alertMsgEl.classList.remove("alert-primary");
-  alertMsgEl.classList.remove("alert-danger");
-  alertMsgEl.classList.remove("alert");
-  alertMsgEl.classList.remove("mb-5");
-}
+// function clearAlertMsgContainer() {
+//   alertMsgEl.textContent = ""
+//   alertMsgEl.display = "none";
+//   alertMsgEl.classList.remove("alert-primary");
+//   alertMsgEl.classList.remove("alert-danger");
+//   alertMsgEl.classList.remove("alert");
+//   alertMsgEl.classList.remove("mb-5");
+// }
 
-function displayMsgInAlertContainer(msg, msgType) {
-  alertMsgEl.display = "block";
-  alertMsgEl.textContent = msg;
-  if (msgType === "info") {
-    alertMsgEl.classList.add("alert", "alert-primary", "mb-1");
+// function displayMsgInAlertContainer(msg, msgType) {
+//   alertMsgEl.display = "block";
+//   alertMsgEl.textContent = msg;
+//   if (msgType === "info") {
+//     alertMsgEl.classList.add("alert", "alert-primary", "mb-1");
+//   } else {
+//     alertMsgEl.classList.add("alert", "alert-danger", "mb-1");
+//   }
+// }
+
+function parseDbErrorToUserFriendlyError(error) {
+  if (error.includes("emailId must be unique")) {
+    return "An account already exists with that emailId.";
   } else {
-    alertMsgEl.classList.add("alert", "alert-danger", "mb-1");
+    return error;
   }
 }
+
+// ----- Event listeners -----
+document.addEventListener('DOMContentLoaded', () => {
+  const cancelButton = document.querySelector('#btn-cancel');
+
+  cancelButton.addEventListener('click', () => {
+    window.location.href = '/#login';
+  });
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.querySelector('#register-form');
@@ -120,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log(typeof (err));
         // console.log("one msg: ", err.errors[0].message);
         // alert(`Error: ${errorText}`);
-        return displayMsgInAlertContainer("Error while registering: " + err.errors[0].message, "danger")
+        const ufError = parseDbErrorToUserFriendlyError(err.errors[0].message);
+        return displayMsgInAlertContainer("Error while registering: " + ufError, "danger")
 
       }
     } catch (error) {
