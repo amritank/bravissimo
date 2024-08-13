@@ -9,6 +9,10 @@
     --bg: rgb(204, 228, 247);
 }
 
+body {
+    font-family: var(--Rubik);
+}
+
 .grey-qo-regular {
     font-family: "Grey Qo", cursive;
     font-weight: 400;

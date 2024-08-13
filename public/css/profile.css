@@ -176,6 +176,7 @@ li[id^="autoComplete_result"] {
         width: 50%;
         /* 50% width on small screens */
         margin: 0 auto;
+        margin-top: 10px;
         /* Center the div horizontally */
     }
 }

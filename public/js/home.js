@@ -23,9 +23,8 @@ function displayMsgInAlertContainer(msg, msgType) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('#loginForm');
-  console.log("here");
+
   loginForm.addEventListener('submit', async (e) => {
-    console.log("here");
     e.preventDefault();
 
     const email = emailEl.value.trim();
@@ -46,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.ok) {
         window.location.href = '/received';
       } else {
-        const errorText = await response.text();
-        alert(`Error: ${errorText}`);
+        const errorText = await response.json();
+        return displayMsgInAlertContainer(errorText.message, "danger");
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('An error occurred. Please try again.');
+      return displayMsgInAlertContainer("Unexpected error while trying to login. Error: " + error, "danger");
     }
   });
 });

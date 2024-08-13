@@ -77,7 +77,6 @@ router.get("/sent", withAuth, async (req, res) => {
             minute: '2-digit',
             timeZoneName: 'short'
           });
-      console.log("[AMU] info", userInfo);
       newNote.user = userInfo;
       tempNotes.push(newNote);
     }
@@ -156,7 +155,7 @@ router.get("/received", withAuth, async (req, res) => {
             minute: '2-digit',
             timeZoneName: 'short'
           });
-      console.log("[AMU] info", userInfo);
+
       newNote.user = userInfo;
       tempNotes.push(newNote);
     }
